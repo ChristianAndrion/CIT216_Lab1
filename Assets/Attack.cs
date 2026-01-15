@@ -34,7 +34,6 @@ public class Attack : MonoBehaviour {
     }
 
     void Update() {
-        Instantiate(bullet, this.transform.position, this.transform.rotation);
         // get length of vector
         distanceToTarget = (target.transform.position - this.transform.position).magnitude;
         Debug.Log(distanceToTarget);
@@ -47,8 +46,15 @@ public class Attack : MonoBehaviour {
         
         if (state == "ATTACK") { 
             LookAt2D(target.transform.position); 
-            this.transform.Translate(Vector3.up * flightSpeed); 
-        } else { 
+            this.transform.Translate(Vector3.up * flightSpeed);
+            Vector3 vectorToTarget = target.transform.position - this.transform.position;
+            if (Vector3.Angle(vectorToTarget, this.transform.up) < 30)
+            {
+                Instantiate(bullet, this.transform.position, this.transform.rotation);
+            }
+        } 
+        else
+        { 
             this.transform.Translate(Vector3.up * flightSpeed); 
         } 
     }
