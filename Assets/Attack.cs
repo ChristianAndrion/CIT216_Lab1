@@ -5,7 +5,9 @@ using UnityEngine;
 public class Attack : MonoBehaviour { 
     public GameObject target; 
     public float turnSpeed = 5.0f;
-    public float flightSpeed = 0.1f;
+    public float flightSpeed = 0.3f;
+
+    public GameObject bullet;
 
     float distanceToTarget;
     string state = "ATTACK";
@@ -32,12 +34,12 @@ public class Attack : MonoBehaviour {
     }
 
     void Update() {
-        
+        Instantiate(bullet, this.transform.position, this.transform.rotation);
         // get length of vector
         distanceToTarget = (target.transform.position - this.transform.position).magnitude;
         Debug.Log(distanceToTarget);
         // this is a very simple state machine to change the rocket's behavior
-        if (distanceToTarget > 5) { 
+        if (distanceToTarget > 10) { 
             state = "ATTACK"; 
         } else if (distanceToTarget < 2) { 
             state = "RETREAT"; 
