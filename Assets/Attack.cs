@@ -6,6 +6,8 @@ public class Attack : MonoBehaviour {
     public GameObject target; 
     public float turnSpeed = 5.0f;
     public float flightSpeed = 0.3f;
+    public float cooldown = .1f;
+    float lastUsedTime;
 
     public GameObject bullet;
 
@@ -48,9 +50,10 @@ public class Attack : MonoBehaviour {
             LookAt2D(target.transform.position); 
             this.transform.Translate(Vector3.up * flightSpeed);
             Vector3 vectorToTarget = target.transform.position - this.transform.position;
-            if (Vector3.Angle(vectorToTarget, this.transform.up) < 30)
+            if ((Vector3.Angle(vectorToTarget, this.transform.up) < 30) && (Time.time > lastUsedTime + cooldown))
             {
                 Instantiate(bullet, this.transform.position, this.transform.rotation);
+                lastUsedTime = Time.time; // when fires
             }
         } 
         else
